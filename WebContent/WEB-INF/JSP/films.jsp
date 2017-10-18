@@ -11,12 +11,17 @@
 	<c:forEach var="film" items="${films}">
 		<c:choose>
 			<c:when test="${filmIdsMetFoto.contains(film.id)}">
-				<img alt="${film.titel}" src="images/${film.id}.jpg" 
-				title="${film.aantalGereserveerd<film.aantalInVoorraad?"reservatie mogelijk":"reservatie niet mogelijk"}">
+				<c:url value="/filmdetails.htm" var="filmdetailsURL">
+					<c:param name="filmid" value="${film.id}" />
+				</c:url>
+				<a href="${filmdetailsURL}"><img alt="${film.titel}"
+					src="images/${film.id}.jpg"
+					title="${film.aantalGereserveerd<film.aantalInVoorraad?"reservatie mogelijk":"reservatie niet mogelijk"}"></a>
 			</c:when>
-			<c:otherwise><img alt="Afbeelding niet beschikbaar" src="images/niks.jpg"></c:otherwise>
+			<c:otherwise>
+				<img alt="Afbeelding niet beschikbaar" src="images/niks.jpg">
+			</c:otherwise>
 		</c:choose>
-		
 	</c:forEach>
 </body>
 </html>

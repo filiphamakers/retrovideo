@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 import be.vdab.entities.Film;
 import be.vdab.entities.Genre;
 
@@ -23,7 +25,8 @@ public class FilmRepository extends AbstractRepository {
 	public List<Film> findAllByGenre(String genre) {
 		List<Film> films = new ArrayList<>();
 		try (Connection connection = dataSource.getConnection();
-				PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_GENRE)) {
+				PreparedStatement statement = connection.prepareStatement(FIND_ALL_BY_GENRE, Statement.RETURN_GENERATED_KEYS)) {
+			connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
 			connection.setAutoCommit(false);
 			statement.setString(1, genre);
 			try(ResultSet result = statement.executeQuery()){

@@ -8,10 +8,14 @@
 </head>
 <body>
 	<vdab:reservaties />
-	<ul>
-		<c:forEach var="film" items="${films}">
-			<li>${film.titel}</li>
-		</c:forEach>
-	</ul>
+	<c:forEach var="film" items="${films}">
+		<c:choose>
+			<c:when test="${filmIdsMetFoto.contains(film.id)}">
+				<img alt="${film.titel}" src="images/${film.id}.jpg">
+			</c:when>
+			<c:otherwise><img alt="Afbeelding niet beschikbaar" src="images/niks.jpg"></c:otherwise>
+		</c:choose>
+		
+	</c:forEach>
 </body>
 </html>

@@ -18,21 +18,16 @@ public class Film {
 		setGenre(genre);
 		setTitel(titel);
 	}
-
-	private void valideerLongValue(long var, String getal, String msg) {
-		if (StringUtils.isLong(getal)) {
-			var = new Long(getal);
-		} else
-			throw new FilmException(msg);
-	}
 	
 	public long getId() {
 		return id;
 	}
 
 	public void setId(String id) {
-		String msg = "ongeldig id voor film";
-		valideerLongValue(this.id, id, msg);
+		if (StringUtils.isLong(id)) {
+			this.id = new Long(id);
+		} else
+			throw new FilmException("ongeldig id voor film");
 	}
 
 	public long getAantalInVoorraad() {
@@ -40,8 +35,10 @@ public class Film {
 	}
 
 	public void setAantalInVoorraad(String aantalInVoorraad) {
-		String msg = "ongeldige waarde voor film (aantal in voorraad)";
-		valideerLongValue(this.aantalInVoorraad, aantalInVoorraad, msg);
+		if (StringUtils.isLong(aantalInVoorraad)) {
+			this.aantalInVoorraad = new Long(aantalInVoorraad);
+		} else
+			throw new FilmException("ongeldige waarde voor film (aantal in voorraad)");
 	}
 
 	public long getAantalGereserveerd() {
@@ -49,8 +46,10 @@ public class Film {
 	}
 
 	public void setAantalGereserveerd(String aantalGereserveerd) {
-		String msg = "ongeldige waarde voor film (aantal gereserveerd)";
-		valideerLongValue(this.aantalGereserveerd, aantalGereserveerd, msg);
+		if (StringUtils.isLong(aantalGereserveerd)) {
+			this.aantalInVoorraad = new Long(aantalGereserveerd);
+		} else
+			throw new FilmException("ongeldige waarde voor film (aantal gereserveerd)");
 	}
 
 	public BigDecimal getPrijs() {

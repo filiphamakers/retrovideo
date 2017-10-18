@@ -1,5 +1,7 @@
 package be.vdab.util;
 
+import java.math.BigDecimal;
+
 public class StringUtils {
 	public static boolean isLong(String string) {
 		try {
@@ -12,7 +14,7 @@ public class StringUtils {
 
 	public static boolean isBigDecimal(String string) {
 		try {
-			Long.parseLong(string);
+			new BigDecimal(string);
 			return true;
 		} catch (NullPointerException|NumberFormatException ex) {
 			return false;

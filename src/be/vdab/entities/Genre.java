@@ -27,7 +27,7 @@ public class Genre {
 	}
 
 	public void setNaam(String naam) {
-		if (naam != null && !naam.trim().isEmpty() && !naam.equals("error")) {
+		if (naam != null && !naam.trim().isEmpty()) {
 			this.naam = naam;
 		} else
 			throw new GenreException("ongeldige naam voor genre");

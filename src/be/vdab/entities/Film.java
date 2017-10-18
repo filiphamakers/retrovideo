@@ -10,7 +10,8 @@ public class Film {
 	private Genre genre;
 	private String titel;
 
-	public Film(String id, String aantalInVoorraad, String aantalGereserveerd, String prijs, Genre genre, String titel) {
+	public Film(String id, String aantalInVoorraad, String aantalGereserveerd, String prijs, Genre genre,
+			String titel) {
 		setId(id);
 		setAantalInVoorraad(aantalInVoorraad);
 		setAantalGereserveerd(aantalGereserveerd);
@@ -18,13 +19,13 @@ public class Film {
 		setGenre(genre);
 		setTitel(titel);
 	}
-	
+
 	public long getId() {
 		return id;
 	}
 
 	public void setId(String id) {
-		if (StringUtils.isLong(id)) {
+		if (StringUtils.isLong(id) && new Long(id) > 0) {
 			this.id = new Long(id);
 		} else
 			throw new FilmException("ongeldig id voor film");
@@ -35,7 +36,7 @@ public class Film {
 	}
 
 	public void setAantalInVoorraad(String aantalInVoorraad) {
-		if (StringUtils.isLong(aantalInVoorraad)) {
+		if (StringUtils.isLong(aantalInVoorraad) && new Long(aantalInVoorraad) >= 0) {
 			this.aantalInVoorraad = new Long(aantalInVoorraad);
 		} else
 			throw new FilmException("ongeldige waarde voor film (aantal in voorraad)");
@@ -46,7 +47,7 @@ public class Film {
 	}
 
 	public void setAantalGereserveerd(String aantalGereserveerd) {
-		if (StringUtils.isLong(aantalGereserveerd)) {
+		if (StringUtils.isLong(aantalGereserveerd) && new Long(aantalGereserveerd) >= 0) {
 			this.aantalGereserveerd = new Long(aantalGereserveerd);
 		} else
 			throw new FilmException("ongeldige waarde voor film (aantal gereserveerd)");
@@ -57,7 +58,7 @@ public class Film {
 	}
 
 	public void setPrijs(String prijs) {
-		if (StringUtils.isBigDecimal(prijs)) {
+		if (StringUtils.isBigDecimal(prijs) && new BigDecimal(prijs).compareTo(BigDecimal.ZERO) >= 0) {
 			this.prijs = new BigDecimal(prijs);
 		} else
 			throw new FilmException("ongeldige prijs voor film");

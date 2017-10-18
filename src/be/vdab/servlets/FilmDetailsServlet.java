@@ -22,16 +22,23 @@ public class FilmDetailsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String VIEW = "/WEB-INF/JSP/filmdetails.jsp";
 	private final transient FilmRepository filmRepository = new FilmRepository();
-	
+
 	@Resource(name = FilmRepository.JNDI_NAME)
 	void setDataSource(DataSource dataSource) {
 		filmRepository.setDataSource(dataSource);
 	}
-	
+
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		Optional<Film> film = filmRepository.findById(new Long(request.getParameter("filmid")));
-		request.setAttribute("film", film.get());
+		if (film.isPresent()) {
+			request.setAttribute("film", film.get());
+			long beschikbaar = film.get().getAantalInVoorraad()-film.get().getAantalGereserveerd();
+			beschikbaar = beschikbaar>0?beschikbaar:0;
+			request.setAttribute("beschikbaar", beschikbaar);
+		}
+		
 		//nog toe te voegen: alternatieve setAttribute() indien film met betreffend id niet gevonden wordt!
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}

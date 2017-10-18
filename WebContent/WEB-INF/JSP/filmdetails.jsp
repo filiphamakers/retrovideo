@@ -7,5 +7,18 @@
 <body>
 	<h1>${film.titel}</h1>
 	<img alt="${film.titel}" src="images/${film.id}.jpg">
+	<dl>
+		<dt>Prijs</dt>
+		<dd>&euro;${film.prijs}</dd>
+		<dt>Voorraad</dt>
+		<dd>${film.aantalInVoorraad}</dd>
+		<dt>Gereserveerd</dt>
+		<dd>${film.aantalGereserveerd}</dd>
+		<dt>Beschikbaar</dt>
+		<dd>${beschikbaar}</dd>
+	</dl>
+	<c:if test="${beschikbaar>0}">
+<!-- 	code voor mandje -->
+	</c:if>
 </body>
 </html>

@@ -47,7 +47,7 @@ public class Film {
 
 	public void setAantalGereserveerd(String aantalGereserveerd) {
 		if (StringUtils.isLong(aantalGereserveerd)) {
-			this.aantalInVoorraad = new Long(aantalGereserveerd);
+			this.aantalGereserveerd = new Long(aantalGereserveerd);
 		} else
 			throw new FilmException("ongeldige waarde voor film (aantal gereserveerd)");
 	}

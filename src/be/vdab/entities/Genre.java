@@ -16,7 +16,7 @@ public class Genre {
 	}
 
 	public void setId(String id) {
-		if (StringUtils.isLong(id)) {
+		if (StringUtils.isLong(id) && new Long(id) > 0 && new Long(id) <= Long.MAX_VALUE) {
 			this.id = new Long(id);
 		} else
 			throw new GenreException("ongeldig id voor genre");
@@ -27,7 +27,7 @@ public class Genre {
 	}
 
 	public void setNaam(String naam) {
-		if (naam != null && !naam.trim().isEmpty() && !naam.equals("error")) {
+		if (naam != null && !naam.trim().isEmpty()) {
 			this.naam = naam;
 		} else
 			throw new GenreException("ongeldige naam voor genre");

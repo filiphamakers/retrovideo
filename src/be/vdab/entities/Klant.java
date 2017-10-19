@@ -1,8 +1,5 @@
 package be.vdab.entities;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import be.vdab.util.StringUtils;
 
 public class Klant {
@@ -30,18 +27,12 @@ public class Klant {
 			throw new KlantException("ongeldig id voor klant");
 	}
 
-	private boolean valideerPattern(String tekst, String patternString) {
-		Pattern pattern = Pattern.compile(patternString);
-		Matcher matcher = pattern.matcher(tekst);
-		return tekst != null && matcher.matches();
-	}
-
 	public String getFamilienaam() {
 		return familienaam;
 	}
-
+	
 	public void setFamilienaam(String familienaam) {
-		if (valideerPattern(familienaam, "[A-Z][\\sa-z]*")) {
+		if (StringUtils.isWellFormed(familienaam, "[A-Za-z]+( [A-Za-z]+)*")) {
 			this.familienaam = familienaam;
 		} else
 			throw new KlantException("ongeldige familienaam voor klant");
@@ -53,7 +44,7 @@ public class Klant {
 	}
 
 	public void setVoornaam(String voornaam) {
-		if (valideerPattern(voornaam, "[A-Z][a-z]*")) {
+		if (StringUtils.isWellFormed(voornaam, "[A-Za-z]+")) {
 			this.voornaam = voornaam;
 		} else
 			throw new KlantException("ongeldige voornaam voor klant");
@@ -68,7 +59,7 @@ public class Klant {
 	}
 
 	public void setStraatNummer(String straatNummer) {
-		if (valideerPattern(straatNummer, "[0-9]{1,8}")) {
+		if (StringUtils.isWellFormed(straatNummer, "([A-Za-z]+ )+[0-9]+")) {
 			this.straatNummer = straatNummer;
 		} else
 			throw new KlantException("ongeldige woonplaatsgegevens voor klant (straatnummer)");
@@ -80,7 +71,7 @@ public class Klant {
 	}
 
 	public void setPostcode(String postcode) {
-		if (valideerPattern(postcode, "[0-9]{4}")) {
+		if (StringUtils.isWellFormed(postcode, "[0-9]{4}")) {
 			this.postcode = postcode;
 		} else
 			throw new KlantException("ongeldige woonplaatsgegevens voor klant (postcode)");
@@ -91,7 +82,7 @@ public class Klant {
 	}
 
 	public void setGemeente(String gemeente) {
-		if (valideerPattern(gemeente, "[A-Z][a-z]*[-\\s]?[A-Z]?[a-z]*")) {
+		if (StringUtils.isWellFormed(gemeente, "[A-Za-z]+")) {
 			this.gemeente = gemeente;
 		} else
 			throw new KlantException("ongeldige woonplaatsgegevens voor klant (gemeente)");

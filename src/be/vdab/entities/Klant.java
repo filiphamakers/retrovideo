@@ -59,7 +59,7 @@ public class Klant {
 	}
 
 	public void setStraatNummer(String straatNummer) {
-		if (StringUtils.isWellFormed(straatNummer, "([A-Za-z]+ )+[0-9]+")) {
+		if (StringUtils.isWellFormed(straatNummer, "[A-Za-z]+( [A-Za-z]+)*( [0-9]+)*")) {
 			this.straatNummer = straatNummer;
 		} else
 			throw new KlantException("ongeldige woonplaatsgegevens voor klant (straatnummer)");

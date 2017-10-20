@@ -1,6 +1,9 @@
 package be.vdab.servlets;
 
 import java.io.IOException;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import be.vdab.entities.Klant;
 import be.vdab.repositories.KlantRepository;
 
 /**
@@ -28,13 +32,14 @@ public class KlantServlet extends HttpServlet {
     
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if (request.getParameter("familienaam") != null) {
+			Set<Klant> klanten = klantRepository.findByLikeFamilienaam(request.getParameter("familienaam")).stream()
+					.filter(optionalKlant -> optionalKlant.isPresent())
+					.map(optionalKlant -> optionalKlant.get())
+					.collect(Collectors.toSet());
+			request.setAttribute("klanten", klanten);
+		}
 		request.getRequestDispatcher(VIEW).forward(request, response);
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

@@ -5,7 +5,7 @@
 <head>
 </head>
 <body>
-	<a href="<c:url value="/index.htm" />">Reservaties</a>
+	<a href="<c:url value="/index.htm" />">Reserveren</a>
 	<a href="<c:url value="/klant.htm" />">Klant</a>
 
 	<h1>Mandje</h1>

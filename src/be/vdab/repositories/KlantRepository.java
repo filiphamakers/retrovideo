@@ -11,7 +11,7 @@ import be.vdab.entities.Klant;
 public class KlantRepository extends AbstractRepository {
 	// SQL statements
 	private static final String BASIC_SELECT = "select id as klantid, familienaam, voornaam, postcode, gemeente from klanten";
-	private static final String FIND_BY_LIKE_FAMILIENAAM = String.format("%s %s", "where familienaam like ?");
+	private static final String FIND_BY_LIKE_FAMILIENAAM = String.format("%s %s", BASIC_SELECT, "where familienaam like ?");
 
 	private Klant converteerNaarKlant(ResultSet result) throws SQLException {
 		return new Klant(result.getString("klantid"),

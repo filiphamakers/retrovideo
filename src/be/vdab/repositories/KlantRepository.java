@@ -15,6 +15,7 @@ public class KlantRepository extends AbstractRepository {
 	// SQL statements
 	private static final String BASIC_SELECT = "select id as klantid, familienaam, voornaam, straatNummer, postcode, gemeente from klanten";
 	private static final String FIND_BY_LIKE_FAMILIENAAM = String.format("%s %s", BASIC_SELECT, "where familienaam like ?");
+	private static final String FIND_BY_ID = String.format("%s %s", BASIC_SELECT, "where id = ?");
 
 	private Klant converteerNaarKlant(ResultSet result) throws SQLException {
 		return new Klant(result.getString("klantid"),
@@ -39,6 +40,25 @@ public class KlantRepository extends AbstractRepository {
 			}
 			connection.commit();
 			return Collections.unmodifiableList(klanten);
+		} catch (SQLException ex) {
+			throw new RepositoryException(ex);
+		}
+	}
+	
+	public Optional<Klant> findById(long id){
+		Optional<Klant> klant = null;
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement statement = connection.prepareStatement(FIND_BY_ID)){
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+			connection.setAutoCommit(false);
+			statement.setLong(1, id);
+			try (ResultSet result = statement.executeQuery()){
+				if (result.next()) {
+					klant = Optional.ofNullable(converteerNaarKlant(result));
+				}
+			}
+			connection.commit();
+			return klant;
 		} catch (SQLException ex) {
 			throw new RepositoryException(ex);
 		}

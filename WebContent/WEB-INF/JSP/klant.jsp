@@ -1,4 +1,4 @@
-<%@page contentType='text/html' pageEncoding='UTF-8' session='false'%>
+<%@page contentType='text/html' pageEncoding='UTF-8'%>
 <%@taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core'%>
 <!doctype html>
 <html lang='nl'>
@@ -11,8 +11,8 @@
 	<h1>Klant</h1>
 	<form>
 		<label>Familienaam bevat: <input type="text"
-			name="familienaam" value="${param.familienaam}" autofocus required></label>
-		<input type="submit" value="Zoeken">
+			name="familienaam" value="${param.familienaam}" autofocus></label>
+		<input type="submit" name="bevestigingsknop" value="Zoeken">
 	</form>
 	<span>${fout}</span>
 
@@ -29,7 +29,12 @@
 			<c:forEach var="klant" items="${klanten}">
 				<tbody>
 					<tr>
-						<td>${klant.naam}</td>
+						<td>
+							<c:url var="bevestigenURL" value="/bevestigen.htm">
+								<c:param name="klant" value="${klant.id}"></c:param>
+							</c:url>
+							<a href="${bevestigenURL}">${klant.naam}</a>
+						</td>
 						<td>${klant.straatNummer}</td>
 						<td>${klant.postcode}</td>
 						<td>${klant.gemeente}</td>

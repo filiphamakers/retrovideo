@@ -19,7 +19,19 @@
 		<dd>${beschikbaar}</dd>
 	</dl>
 	<c:if test="${beschikbaar>0}">
-		<a>In mandje</a>
+		<form method="post" action="<c:url value="/mandje.htm"/>" id="filmreserverenform">
+			<input name="filmid" value="${film.id}" hidden="true"> 
+			<input type="submit" value="In mandje" name="filmreserverenknop">
+		</form>
+		<script>
+			document.getElementById("filmreserverenform").onsubmit = function() {
+				if (!navigator.cookieEnabled) {
+					alert("Om films te reserveren moet je cookies toestaan.");
+					return false;
+				}
+				document.getElementByName("filmreserverenknop").disabled = true;
+			};
+		</script>
 	</c:if>
 </body>
 </html>

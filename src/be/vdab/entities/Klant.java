@@ -1,5 +1,8 @@
 package be.vdab.entities;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import be.vdab.util.StringUtils;
 
 public class Klant {
@@ -21,7 +24,7 @@ public class Klant {
 	}
 
 	public void setId(String id) {
-		if (StringUtils.isLong(id) && new Long(id) > 0 && new Long(id) <= Long.MAX_VALUE) {
+		if (StringUtils.isLong(id) && new Long(id) > 0) {
 			this.id = new Long(id);
 		} else
 			throw new KlantException("ongeldig id voor klant");
@@ -87,6 +90,36 @@ public class Klant {
 		} else
 			throw new KlantException("ongeldige woonplaatsgegevens voor klant (gemeente)");
 
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(21, 53).append(id).toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (obj.getClass() != getClass()) {
+			return false;
+		}
+		Klant klant = (Klant) obj;
+		return new EqualsBuilder()
+				.append(id, klant.id)
+				.append(voornaam, klant.voornaam)
+				.append(familienaam, klant.familienaam)
+				.isEquals();
+	}
+
+	@Override
+	public String toString() {
+		return String.format("klantid=%s, naam=%s, straatnummer=%s, gemeente=%s, postcode=%s"
+				, id, getNaam(), straatNummer, gemeente, postcode);
 	}
 
 }

@@ -2,6 +2,9 @@ package be.vdab.entities;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import be.vdab.util.StringUtils;
 
 public class Film {
@@ -25,7 +28,7 @@ public class Film {
 	}
 
 	public void setId(String id) {
-		if (StringUtils.isLong(id) && new Long(id) > 0 && new Long(id) <= Long.MAX_VALUE) {
+		if (StringUtils.isLong(id) && new Long(id) > 0) {
 			this.id = new Long(id);
 		} else
 			throw new FilmException("ongeldig id voor film");
@@ -84,6 +87,35 @@ public class Film {
 			this.titel = titel;
 		} else
 			throw new FilmException("ongeldige titel voor film");
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder(11, 31).append(id).toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (obj.getClass() != getClass()) {
+			return false;
+		}
+		Film film = (Film) obj;
+		return new EqualsBuilder()
+				.append(id, film.id)
+				.append(titel, film.titel)
+				.isEquals();
+	}
+
+	@Override
+	public String toString() {
+		return String.format("filmid=%s, titel=%s, prijs=%s, aantal gereserveerd=%s, aantal in voorraad=%s"
+				, id, titel, prijs.toString(), aantalGereserveerd, aantalInVoorraad);
 	}
 
 }

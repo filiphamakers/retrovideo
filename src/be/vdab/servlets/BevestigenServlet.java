@@ -22,7 +22,8 @@ import be.vdab.repositories.KlantRepository;
 @WebServlet("/bevestigen.htm")
 public class BevestigenServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String MANDJE = "mandje";
+	private static final String MANDJE = SessionFieldStorage.MANDJE.getSessionField();
+	private static final String KLANT_ID = SessionFieldStorage.KLANT_ID.getSessionField();
 	private static final String VIEW = "/WEB-INF/JSP/bevestigen.jsp";
 	private final transient KlantRepository klantRepository = new KlantRepository();
 
@@ -34,17 +35,19 @@ public class BevestigenServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Optional<Klant> klant = null;
+		Optional<Klant> klant = Optional.ofNullable(null);
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			@SuppressWarnings("unchecked")
 			Set<Long> mandje = (Set<Long>) session.getAttribute(MANDJE);
-			request.setAttribute("aantalFilms", mandje.size());
-			klant = klantRepository.findById(Long.parseLong(request.getParameter("klant")));
-			if (klant.isPresent()) {
-				request.setAttribute("klant", klant.get());
+			if (mandje != null) {
+				request.setAttribute("aantalFilms", mandje.size());
+				klant = klantRepository.findById(Long.parseLong(request.getParameter("klant")));
 			}
-
+		}
+		if (klant.isPresent()) {
+			request.setAttribute("klant", klant.get());
+			request.getSession().setAttribute(KLANT_ID, klant.get().getId());
 		}
 		request.getRequestDispatcher(VIEW).forward(request, response);
 

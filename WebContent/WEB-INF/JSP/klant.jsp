@@ -12,7 +12,7 @@
 	<form>
 		<label>Familienaam bevat: <input type="text"
 			name="familienaam" value="${param.familienaam}" autofocus></label>
-		<input type="submit" name="bevestigingsknop" value="Zoeken">
+		<input type="submit" value="Zoeken">
 	</form>
 	<span>${fout}</span>
 

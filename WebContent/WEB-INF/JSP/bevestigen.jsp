@@ -11,9 +11,12 @@
 	<a href="<c:url value="/klant.htm" />">Klant</a>
 
 	<h1>Bevestigen</h1>
-	<p>${aantalFilms} ${aantalFilms==1?"film":"films"} voor ${klant.naam}</p>
-	<form>
-		<input type="submit" value="bevestigen">
-	</form>
+	<c:if test="${not empty klant and aantalFilms>0}">
+		<p>${aantalFilms} ${aantalFilms==1?"film":"films"} voor ${klant.naam}</p>
+		<form method="post" action="<c:url value="/rapport.htm"/>">
+			<input name="klant" value="${klant.id}" hidden>
+			<input type="submit" name="bevestigenknop" value="bevestigen">
+		</form>
+	</c:if>
 </body>
 </html>

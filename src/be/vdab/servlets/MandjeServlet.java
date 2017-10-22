@@ -24,7 +24,7 @@ import be.vdab.repositories.FilmRepository;
 @WebServlet("/mandje.htm")
 public class MandjeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String MANDJE = "mandje";
+	private static final String MANDJE = SessionFieldStorage.MANDJE.getSessionField();
 	private static final String VIEW = "/WEB-INF/JSP/mandje.jsp";
 	private final transient FilmRepository filmRepository = new FilmRepository();
 

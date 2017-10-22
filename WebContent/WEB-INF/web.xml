@@ -9,6 +9,10 @@
     <location>/WEB-INF/error/404.jsp</location>
   </error-page>
   <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/error/500.jsp</location>
+  </error-page>
+  <error-page>
     <exception-type>be.vdab.entities.FilmException</exception-type>
     <location>/WEB-INF/error/exception.jsp</location>
   </error-page>

@@ -40,7 +40,7 @@ public class BevestigenServlet extends HttpServlet {
 		if (session != null) {
 			@SuppressWarnings("unchecked")
 			Set<Long> mandje = (Set<Long>) session.getAttribute(MANDJE);
-			if (mandje != null) {
+			if (request.getParameter("klant") != null && mandje != null) {
 				request.setAttribute("aantalFilms", mandje.size());
 				klant = klantRepository.findById(Long.parseLong(request.getParameter("klant")));
 			}

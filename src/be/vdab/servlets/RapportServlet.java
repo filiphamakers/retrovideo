@@ -1,6 +1,7 @@
 package be.vdab.servlets;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class RapportServlet extends HttpServlet {
 	// SESSION FIELDS
 	private static final String KLANT_ID = SessionFieldStorage.KLANT_ID.getSessionField();
 	private static final String MANDJE = SessionFieldStorage.MANDJE.getSessionField();
-	private static final String MISLUKTE_RESERVATIES_IDS = SessionFieldStorage.MISLUKTE_RESERVATIES_IDS
+	private static final String MISLUKTE_RESERVATIES = SessionFieldStorage.MISLUKTE_RESERVATIES
 			.getSessionField();
 	// REPOSITORIES
 	private final transient ReservatieRepository reservatieRepository = new ReservatieRepository();
@@ -41,43 +42,26 @@ public class RapportServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		@SuppressWarnings("unchecked")
-		Set<Long> mislukteReservatiesIDS = (Set<Long>) request.getSession().getAttribute(MISLUKTE_RESERVATIES_IDS);
-		if (mislukteReservatiesIDS != null) {
-			Set<String> mislukteReservatiesTitels = new LinkedHashSet<>();
-			for (Long filmid : mislukteReservatiesIDS) {
-				filmRepository.findById(filmid).ifPresent(film -> mislukteReservatiesTitels.add(film.getTitel()));
-			}
-			request.setAttribute("mislukteReservatiesTitels", mislukteReservatiesTitels);
-			mislukteReservatiesTitels.stream().forEach(titel -> System.out.println(titel));
-		}
-		request.setAttribute("reservatieStatus", mislukteReservatiesIDS == null ? "De reservatie is OK"
-				: "De volgende films konden niet worden gereserveerd:");
-		//winkelmandje na bevestiging leegmaken
-		if (request.getSession() != null) {
-			request.getSession().invalidate();
-		}
 		request.getRequestDispatcher(VIEW).forward(request, response);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println(String.format("klantid:%s ", request.getSession().getAttribute(KLANT_ID)));
 		@SuppressWarnings("unchecked")
 		Set<Long> mandje = (Set<Long>) request.getSession().getAttribute(MANDJE);
 		Long klantid = (Long) request.getSession().getAttribute(KLANT_ID);
+		Set<String> mislukteReservaties = new LinkedHashSet<>();
 		if (mandje != null && klantid != null) {
-			Set<Long> mislukteReservatiesIDS = new LinkedHashSet<>();
 			for (Long filmid : mandje) {
 				if (!reservatieRepository.addReservatie(klantid, filmid)) {
-					mislukteReservatiesIDS.add(filmid);
+					filmRepository.findById(filmid).ifPresent(film -> mislukteReservaties.add(film.getTitel()));
 				}
 			}
-			if (!mislukteReservatiesIDS.isEmpty()) {
-				request.getSession().setAttribute(MISLUKTE_RESERVATIES_IDS, mislukteReservatiesIDS);
-			}
+			request.getSession().removeAttribute(MANDJE);
+			request.getSession().removeAttribute(KLANT_ID);
 		}
+		request.getSession().setAttribute(MISLUKTE_RESERVATIES, mislukteReservaties);
 		response.sendRedirect(request.getRequestURI());
 	}
 

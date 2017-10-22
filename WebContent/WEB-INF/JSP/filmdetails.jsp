@@ -19,9 +19,10 @@
 		<dd>${beschikbaar}</dd>
 	</dl>
 	<c:if test="${beschikbaar>0}">
-		<form method="post" action="<c:url value="/mandje.htm"/>" id="filmreserverenform">
-			<input name="filmid" value="${film.id}" hidden="true"> 
-			<input type="submit" value="In mandje" name="filmreserverenknop">
+		<form method="post" action="<c:url value="/mandje.htm"/>"
+			id="filmreserverenform">
+			<input name="filmid" value="${film.id}" hidden="true"> <input
+				type="submit" value="In mandje" name="filmreserverenknop">
 		</form>
 		<script>
 			document.getElementById("filmreserverenform").onsubmit = function() {

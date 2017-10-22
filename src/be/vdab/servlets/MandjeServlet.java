@@ -1,9 +1,11 @@
 package be.vdab.servlets;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import be.vdab.repositories.FilmRepository;
+import be.vdab.entities.Film;
 
 /**
  * Servlet implementation class MandjeServlet
@@ -41,10 +44,14 @@ public class MandjeServlet extends HttpServlet {
 			@SuppressWarnings("unchecked")
 			Set<Long> mandje = (Set<Long>) session.getAttribute(MANDJE);
 			if (mandje != null) {
-				request.setAttribute("filmsInMandje",
-						mandje.stream().map(id -> filmRepository.findById(id))
-								.filter(optionalFilm -> optionalFilm.isPresent())
-								.map(optionalFilm -> optionalFilm.get()).collect(Collectors.toList()));
+				Set<Film> filmsInMandje = new LinkedHashSet<>();
+				filmsInMandje = mandje.stream().map(id -> filmRepository.findById(id))
+						.filter(optionalFilm -> optionalFilm.isPresent())
+						.map(optionalFilm -> optionalFilm.get()).collect(Collectors.toSet());
+				request.setAttribute("filmsInMandje",filmsInMandje);
+				request.setAttribute("totaal", filmsInMandje.stream()
+						.map(film -> film.getPrijs())
+						.reduce(BigDecimal.ZERO, BigDecimal::add));
 			}
 		}
 		request.getRequestDispatcher(VIEW).forward(request, response);

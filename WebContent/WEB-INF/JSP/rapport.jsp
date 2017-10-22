@@ -5,7 +5,7 @@
 <head>
 </head>
 <body>
-	<a href="<c:url value="index.htm"/>">Reserveren</a>
+	<a href="<c:url value="/index.htm"/>">Reserveren</a>
 	<h1>Rapport</h1>
 	<h2>${reservatieStatus}</h2>
 	<c:if test="${not empty mislukteReservatiesTitels}">

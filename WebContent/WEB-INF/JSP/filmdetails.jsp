@@ -5,7 +5,7 @@
 <head>
 </head>
 <body>
-	<a href="index.htm">Reserveren</a>
+	<a href="<c:url value="/index.htm"/>">Reserveren</a>
 	<h1>${film.titel}</h1>
 	<img alt="${film.titel}" src="images/${film.id}.jpg">
 	<dl>

@@ -29,6 +29,10 @@
 									value="${film.id}"></td>
 							</tr>
 						</c:forEach>
+						<tr>
+							<td>Totaal:</td>
+							<td>&euro;${totaal}</td>
+						</tr>
 					</tbody>
 				</table>
 			</form>

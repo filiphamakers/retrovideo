@@ -13,7 +13,6 @@ tomcat
 *.dmg
 *.gz
 *.iso
-*.jar
 *.rar
 *.tar
 *.zip
@@ -32,6 +31,7 @@ target/
 .idea/
 
 # eclipse project file
+build/
 .settings/
 .classpath
 .project

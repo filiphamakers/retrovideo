@@ -41,7 +41,7 @@ public class Klant {
 	}
 
 	public void setFamilienaam(String familienaam) {
-		if (valideerPattern(familienaam, "[A-Z][\\sa-z]*")) {
+		if (valideerPattern(familienaam, "^[A-Z][\\sa-z]*$")) {
 			this.familienaam = familienaam;
 		} else
 			throw new KlantException("ongeldige familienaam voor klant");

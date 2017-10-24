@@ -1,1 +1,35 @@
-@charset "UTF-8";
+*, *:before, *:after {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+nav {
+	margin: 1em 0 1em;
+}
+
+nav li {
+	display: inline-block;
+	list-style: none;
+}
+
+
+table {
+    border-spacing: 0;
+}
+
+table td {
+    padding-right: 1.5em;
+}
+table thead {
+    font-weight: bold;
+    color: beige;
+    background-color: rgb(92, 92, 61);
+}
+
+table tbody tr:nth-child(odd){
+    background-color: rgb(225, 225, 208);
+}
+
+table tbody tr:nth-child(even){
+    background-color: white;
+}

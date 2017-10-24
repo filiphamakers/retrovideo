@@ -9,15 +9,23 @@
     <location>/WEB-INF/error/404.jsp</location>
   </error-page>
   <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/error/500.jsp</location>
+  </error-page>
+  <error-page>
     <exception-type>be.vdab.entities.FilmException</exception-type>
-    <location>/WEB-INF/error/filmexception.jsp</location>
+    <location>/WEB-INF/error/exception.jsp</location>
   </error-page>
   <error-page>
     <exception-type>be.vdab.entities.GenreException</exception-type>
-    <location>/WEB-INF/error/genreexception.jsp</location>
+    <location>/WEB-INF/error/exception.jsp</location>
+  </error-page>
+  <error-page>
+    <exception-type>be.vdab.entities.KlantException</exception-type>
+    <location>/WEB-INF/error/exception.jsp</location>
   </error-page>
   <error-page>
     <exception-type>be.vdab.repositories.RepositoryException</exception-type>
-    <location>/WEB-INF/error/repositoryexception.jsp</location>
+    <location>/WEB-INF/error/exception.jsp</location>
   </error-page>
 </web-app>
